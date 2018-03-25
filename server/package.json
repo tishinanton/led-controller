@@ -1,0 +1,25 @@
+{
+    "name": "led-controller-server",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "ts-node ./app/app.ts"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "body-parser": "^1.18.2",
+        "cors": "^2.8.4",
+        "express": "4.16.3",
+        "serialport": "6.1.1"
+    },
+    "devDependencies": {
+        "@types/body-parser": "^1.16.8",
+        "@types/cors": "^2.8.3",
+        "@types/express": "^4.11.1",
+        "@types/serialport": "^6.0.1",
+        "typescript": "2.7.2"
+    }
+}
