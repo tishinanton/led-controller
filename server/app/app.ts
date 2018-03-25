@@ -3,6 +3,8 @@ import * as cors from 'cors';
 import * as bodyParser from 'body-parser';
 import { SetColorCommand } from './models/set-color';
 import * as SerialPort from 'serialport';
+import { SetLedColorCommand } from './models/set-led-color';
+import { SetBrightnessCommand } from './models/set-brightness';
 
 const app = express();
 
@@ -23,10 +25,10 @@ serial.on('data', (data) => {
     console.log('Data:', data.toString());
 })
 
-app.post('/api/execute', (req, res) => {
+app.post('/api/set-color', (req, res) => {
     const cmd = new SetColorCommand(req.body);
     try {
-        serial.write(`1 ${cmd.red} ${cmd.green} ${cmd.blue}`);
+        serial.write(cmd.build());
         res.send();
     } catch (ex) {
         res.status(402);
@@ -34,3 +36,26 @@ app.post('/api/execute', (req, res) => {
     }
 
 });
+
+app.post('/api/set-led-color', (req, res) => {
+    const cmd = new SetLedColorCommand(req.body);
+    try {
+        serial.write(cmd.build());
+        res.send();
+    } catch (ex) {
+        res.status(402);
+        res.json(ex);
+    }
+});
+
+app.post('/api/set-brightness', (req, res) => {
+    const cmd = new SetBrightnessCommand(req.body);
+    try {
+        serial.write(cmd.build());
+        res.send();
+    } catch (ex) {
+        res.status(402);
+        res.json(ex);
+    }
+});
+

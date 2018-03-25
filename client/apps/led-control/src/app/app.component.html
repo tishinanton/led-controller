@@ -1,0 +1,9 @@
+<mat-toolbar color="primary">
+    <mat-toolbar-row>
+        Led Controller
+    </mat-toolbar-row>
+</mat-toolbar>
+
+<input type="color" #colorInput [(ngModel)]="color"> <button (click)="setColor()">SetColor</button>
+
+<router-outlet></router-outlet>

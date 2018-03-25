@@ -78,6 +78,14 @@ struct LedController
         switch (this->sCmd)
         {
         case 1:
+            Serial.print("Executing: ");
+            Serial.print(this->sCmd);
+            Serial.print(" red: ");
+            Serial.print(this->sRed);
+            Serial.print(" green: ");
+            Serial.print(this->sGreen);
+            Serial.print(" blue: ");
+            Serial.println(this->sBlue);
             this->setColor(this->sRed, this->sGreen, this->sBlue);
             break;
         case 2:

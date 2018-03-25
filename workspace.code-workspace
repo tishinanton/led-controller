@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "arduino"
+		},
+		{
+			"path": "server"
+		},
+		{
+			"path": "client"
+		}
+	],
+    "settings": {}
+}
