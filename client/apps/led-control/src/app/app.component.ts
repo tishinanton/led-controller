@@ -13,6 +13,7 @@ export class AppComponent implements OnInit {
     @ViewChild('colorInput')
     colorInput: ElementRef;
 
+    mode: number;
 
     constructor(private http: HttpClient) { }
 
@@ -20,7 +21,11 @@ export class AppComponent implements OnInit {
 
     setColor() {
         const el = this.colorInput.nativeElement as HTMLInputElement;
-        this.http.post('http://localhost:3000/api/set-color', this.hexToRgbA(el.value)).subscribe(() => {});
+        this.http.post('http://localhost:3000/api/set-color', this.hexToRgbA(el.value)).subscribe(() => { });
+    }
+
+    setMode() {
+        this.http.post('http://localhost:3000/api/set-mode', { command: 4, mode: this.mode }).subscribe(() => { })
     }
 
     private hexToRgbA(hex) {

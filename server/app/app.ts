@@ -5,6 +5,8 @@ import { SetColorCommand } from './models/set-color';
 import * as SerialPort from 'serialport';
 import { SetLedColorCommand } from './models/set-led-color';
 import { SetBrightnessCommand } from './models/set-brightness';
+import { SSL_OP_MICROSOFT_BIG_SSLV3_BUFFER } from 'constants';
+import { SetModeCommand } from './models/set-mode';
 
 const app = express();
 
@@ -17,7 +19,7 @@ app.listen(3000, () => {
     console.log("Server is running at http://localhost:3000");
 });
 
-const serial = new SerialPort('COM7', { baudRate: 9600, }, (err) => {
+const serial = new SerialPort('COM4', { baudRate: 9600, }, (err) => {
     console.error('error:', err);
 });
 
@@ -25,8 +27,7 @@ serial.on('data', (data) => {
     console.log('Data:', data.toString());
 })
 
-app.post('/api/set-color', (req, res) => {
-    const cmd = new SetColorCommand(req.body);
+function executeCmd(cmd, res) {
     try {
         serial.write(cmd.build());
         res.send();
@@ -34,28 +35,25 @@ app.post('/api/set-color', (req, res) => {
         res.status(402);
         res.json(ex);
     }
+}
 
+app.post('/api/set-mode', (req, res) => {
+    const cmd = new SetModeCommand(req.body);
+    executeCmd(cmd, res);
+});
+
+app.post('/api/set-color', (req, res) => {
+    const cmd = new SetColorCommand(req.body);
+    executeCmd(cmd, res);
 });
 
 app.post('/api/set-led-color', (req, res) => {
     const cmd = new SetLedColorCommand(req.body);
-    try {
-        serial.write(cmd.build());
-        res.send();
-    } catch (ex) {
-        res.status(402);
-        res.json(ex);
-    }
+    executeCmd(cmd, res);
 });
 
 app.post('/api/set-brightness', (req, res) => {
     const cmd = new SetBrightnessCommand(req.body);
-    try {
-        serial.write(cmd.build());
-        res.send();
-    } catch (ex) {
-        res.status(402);
-        res.json(ex);
-    }
+    executeCmd(cmd, res);
 });
 

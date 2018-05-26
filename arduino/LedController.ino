@@ -22,5 +22,6 @@ void loop()
         controller.readCommand();
         controller.execute();
     }
+    controller.nextStep();
     controller.show();
 }
